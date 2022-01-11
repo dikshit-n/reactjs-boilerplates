@@ -18,7 +18,7 @@ const slice = createSlice({
       return { ..._state, data: action.payload, isAuthenticated: true };
     },
     logout(_state: AUTH_STATE, _action: PayloadAction<void>) {
-      return initialState;
+      return { ...initialState, isInitialized: true };
     },
   },
 });

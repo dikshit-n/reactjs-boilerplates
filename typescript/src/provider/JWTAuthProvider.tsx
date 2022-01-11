@@ -1,12 +1,21 @@
-import { useActions } from "@/hooks";
+import { useAuth } from "@/hooks";
+import { getError } from "@/utils";
 import { useEffect } from "react";
 
 export const JWTAuthProvider: React.FC = (props) => {
-  const { auth } = useActions();
+  const { initialize, isInitialized } = useAuth();
 
   useEffect(() => {
-    auth.initialize({});
+    const initializeApp = async () => {
+      try {
+        await initialize();
+        window.flash({ message: "Authentication successfull" });
+      } catch (err) {
+        window.flash({ message: getError(err), variant: "error" });
+      }
+    };
+    initializeApp();
   }, []);
 
-  return <>{props.children}</>;
+  return <>{isInitialized ? props.children : <div>Initializing...</div>}</>;
 };
