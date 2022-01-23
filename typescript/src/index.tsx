@@ -6,13 +6,16 @@ import { store } from "./redux";
 import { Provider as ReduxProvider } from "react-redux";
 import { JWTAuthProvider as AuthProvider } from "@/provider";
 import * as serviceWorker from "./serviceWorker";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <ReduxProvider store={store}>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </BrowserRouter>
     </ReduxProvider>
   </React.StrictMode>,
   document.getElementById("root")

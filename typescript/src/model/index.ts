@@ -11,6 +11,7 @@ import type {
 
 // querystring
 import type { ParsedUrlQueryInput } from "querystring";
+import { RouteProps } from "react-router-dom";
 
 // redux
 ///////// auth
@@ -141,3 +142,57 @@ export interface LOGIN_AUTH_PROPS {
   email: string;
   password: string;
 }
+
+// --------------------------------------------------------------------------- //
+// react
+
+// react-router
+
+export interface ROLE_ROUTE_DEFINITION {
+  routeDefinition: ROUTE_DEFINITION[];
+  sidebarStructure: SIDEBAR_MENU_ITEMS_STRUCTURE;
+}
+
+export interface ROUTE_DEFINITION extends RouteProps {
+  path: string;
+  children?: ROUTE_DEFINITION[];
+}
+
+// ------------------------------------------------------------------------------- //
+
+// layouts
+// header
+export interface EXTENDED_SIDEBAR_LAYOUT_PROPS {
+  headerProps?: HEADER_PROPS;
+  sidebarRoutes?: SIDEBAR_MENU_ITEMS_STRUCTURE;
+}
+
+export interface SIDEBAR_MENU_ITEM_STRUCTURE {
+  link?: string;
+  label?: string;
+  icon?: React.ReactNode;
+  items?: SIDEBAR_MENU_ITEM_STRUCTURE[];
+}
+
+export type SIDEBAR_MENU_ITEMS_STRUCTURE = {
+  heading?: string;
+  items?: SIDEBAR_MENU_ITEM_STRUCTURE[];
+}[];
+interface HEADER_USER_ACTION extends CUSTOM_BUTTON_PROPS {
+  label?: string | JSX.Element;
+}
+export type HEADER_USER_ACTIONS = HEADER_USER_ACTION[];
+export interface HEADER_PROPS {
+  avatar?: {
+    image?: string | null;
+    name?: string;
+    email?: string;
+    actions?: HEADER_USER_ACTIONS;
+    logout?: (params: any) => any;
+  };
+}
+
+// ------------------------------------------------------------ //
+
+// #rbac-setup
+export type ROLE = "superadmin" | "admin";

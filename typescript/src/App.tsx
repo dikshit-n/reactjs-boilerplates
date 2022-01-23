@@ -1,12 +1,17 @@
-import { useEffect } from "react";
-import { createEventEmitters } from "@/utils";
+// import { useEffect } from "react";
+// import { createEventEmitters } from "@/utils";
+
+import { useRoutes } from "react-router-dom";
+import { routeDefinition } from "./routes";
 
 function App() {
-  useEffect(() => {
-    createEventEmitters();
-  }, []);
+  const content = useRoutes(routeDefinition);
 
-  return <div className="App">Hello world</div>;
+  // useEffect(() => {
+  //   createEventEmitters();
+  // }, []);
+
+  return content;
 }
 
 export default App;
