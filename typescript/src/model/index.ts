@@ -39,6 +39,8 @@ export interface JWT_AUTH_CONTEXT extends AUTH_STATE {
   logout: () => any;
 }
 
+// ---------------------------------------------------------------- //
+
 // custom-event-models
 
 // flash event

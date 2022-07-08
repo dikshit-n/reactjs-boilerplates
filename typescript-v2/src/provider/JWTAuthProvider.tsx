@@ -1,9 +1,10 @@
-import { useAuth } from "@/hooks";
-import { getError } from "@/utils";
 import { useEffect } from "react";
+import { AppLoader } from "src/components";
+import { useAuth } from "src/hooks";
+import { getError } from "src/utils";
 
-export const JWTAuthProvider: React.FC = (props) => {
-  const { initialize, isInitialized } = useAuth();
+export const JWTAuthProvider = (props) => {
+  const { isInitialized, initialize } = useAuth();
 
   useEffect(() => {
     const initializeApp = async () => {
@@ -17,5 +18,5 @@ export const JWTAuthProvider: React.FC = (props) => {
     initializeApp();
   }, []);
 
-  return <>{isInitialized ? props.children : <div>Initializing...</div>}</>;
+  return <>{isInitialized ? props.children : <AppLoader />}</>;
 };
