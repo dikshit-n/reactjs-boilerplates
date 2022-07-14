@@ -1,14 +1,18 @@
-import { LoginPageContent } from "src/content/auth/";
+import { LoginPageContent } from "src/content/auth";
+import { authSetup } from "src/data";
 import { Guest } from "src/guard";
-import { ROUTE_DEFINITION } from "src/model";
+import { ROLE_ROUTE_DEFINITION } from "src/routes";
 
-export const authRoutes: ROUTE_DEFINITION[] = [
-  {
-    path: "/auth/login",
-    element: (
-      <Guest>
-        <LoginPageContent />
-      </Guest>
-    ),
-  },
-];
+export const authRoutes: ROLE_ROUTE_DEFINITION = {
+  routeDefinition: [
+    {
+      path: authSetup.authPage,
+      element: (
+        <Guest>
+          <LoginPageContent />
+        </Guest>
+      ),
+    },
+  ],
+  sidebarStructure: [],
+};

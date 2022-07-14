@@ -1,9 +1,23 @@
-import { CONFIRMATION_MODAL_PROPS, CUSTOM_BUTTON_PROPS } from "src/model";
 import { Box, Avatar, Typography } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
-import { CustomButton } from "src/components";
+import { CustomButton, CUSTOM_BUTTON_PROPS } from "src/components";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
+
+export interface CONFIRMATION_MODAL_PROPS {
+  onConfirm?: Function;
+  onCancel?: Function;
+  title?: JSX.Element | string | null;
+  description?: JSX.Element | string | null;
+  confirmButton?:
+    | JSX.Element
+    | { label: any; props?: CUSTOM_BUTTON_PROPS }
+    | null;
+  cancelButton?:
+    | JSX.Element
+    | { label: any; props?: CUSTOM_BUTTON_PROPS }
+    | null;
+}
 
 const AvatarWarning = styled(Avatar)(
   ({ theme }) => `

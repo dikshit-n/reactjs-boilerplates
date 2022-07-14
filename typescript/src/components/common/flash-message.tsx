@@ -8,7 +8,7 @@ export const FlashMessage: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    EventEmitter.addListener("flash", (params: FLASH_EVENT_PROPS) => {
+    const flashMessageListener = (params: FLASH_EVENT_PROPS) => {
       const { message, ...rest } = params;
       enqueueSnackbar(message, {
         variant: "success",
@@ -21,7 +21,11 @@ export const FlashMessage: React.FC = () => {
           ...rest.anchorOrigin,
         },
       });
-    });
+    };
+    EventEmitter.addListener("flash", flashMessageListener);
+    return () => {
+      EventEmitter.removeListener("flash", flashMessageListener);
+    };
   }, []);
 
   return null;

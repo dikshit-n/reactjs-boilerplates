@@ -1,8 +1,11 @@
 import axios, { AxiosError } from "axios";
 import { getCookie } from "src/utils";
-import { authSetup } from "src/data";
+import { authSetup, msalErrorMessage, projectSetup } from "src/data";
+import { BrowserAuthError } from "@azure/msal-browser";
 
-export const getError = (errorObject: Error | AxiosError) => {
+export const getError = (
+  errorObject: Error | AxiosError | BrowserAuthError
+) => {
   if (axios.isAxiosError(errorObject)) {
     let error: any = {
       message: "Failed to process your request",
@@ -36,7 +39,7 @@ export const getError = (errorObject: Error | AxiosError) => {
 
 // creating axios instance
 export const axiosInstance = axios.create({
-  baseURL: "https://api.dev.rmcgcc.com",
+  baseURL: projectSetup.baseURL,
 });
 
 // setting token in header for each request
@@ -104,6 +107,25 @@ export async function handleError(error, customFunction?: Function) {
     if (customFunction) customFunction(error);
     else window.flash({ message: getError(error).message, variant: "error" });
   }
+}
+
+export async function handleSuccess(message, customFunction?: Function) {
+  if (message) {
+    if (customFunction) customFunction(message);
+    else window.flash({ message });
+  }
+}
+
+// when you use microsoft authentication
+export function convertMsalError(error) {
+  if (error && error instanceof BrowserAuthError) {
+    const newError = new Error(
+      msalErrorMessage[getError(error).errorCode] ||
+        "Failed to process your request"
+    );
+    return newError;
+  }
+  return error;
 }
 
 export async function rejectError(_error?: any) {

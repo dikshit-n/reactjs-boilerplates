@@ -614,7 +614,7 @@ export const PureLightThemeMinimalSidebar = createTheme({
       },
       styleOverrides: {
         root: {
-          fontWeight: "bold",
+          fontWeight: "lighter",
           textTransform: "none",
           paddingLeft: 16,
           paddingRight: 16,
@@ -1232,7 +1232,7 @@ export const PureLightThemeMinimalSidebar = createTheme({
       fontSize: 14,
     },
     button: {
-      fontWeight: 600,
+      fontWeight: "normal",
     },
     caption: {
       fontSize: 13,

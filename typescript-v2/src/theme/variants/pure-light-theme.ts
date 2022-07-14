@@ -52,16 +52,16 @@ const colors = {
   },
   layout: {
     general: {
-      bodyBg: "#f2f5f9",
+      bodyBg: "#FFFFFF",
     },
     sidebar: {
-      background: themeColors.black,
+      background: "#FFFFFF",
       textColor: themeColors.white,
       dividerBg: "#f2f5f9",
       menuItemColor: "#242E6F",
-      menuItemColorActive: themeColors.primary,
+      menuItemColorActive: themeColors.white,
       menuItemBg: themeColors.white,
-      menuItemBgActive: "#f2f5f9",
+      menuItemBgActive: themeColors.primary,
       menuItemIconColor: lighten(themeColors.secondary, 0.3),
       menuItemIconColorActive: themeColors.primary,
       menuItemHeadingColor: darken(themeColors.secondary, 0.3),
@@ -244,9 +244,10 @@ export const PureLightTheme = createTheme({
       "2px 0 3px rgba(159, 162, 191, .18), 1px 0 1px rgba(159, 162, 191, 0.32)",
   },
   header: {
-    background: colors.alpha.white[100],
+    background: "#F6F8FA",
     boxShadow: colors.shadows.cardSm,
     textColor: colors.secondary.main,
+    height: "88.5px",
   },
   spacing: 9,
   palette: {
@@ -592,49 +593,43 @@ export const PureLightTheme = createTheme({
       },
       styleOverrides: {
         root: {
+          borderRadius: "6px",
           fontWeight: "bold",
           textTransform: "none",
-          paddingLeft: 16,
-          paddingRight: 16,
+          paddingLeft: "8px",
+          paddingRight: "8px",
+          paddingTop: "4px",
+          paddingBottom: "4px",
+          boxShadow: "0px 1px 4px 0px rgba(166,166,166,1)",
+          "&:hover, &:active": {
+            boxShadow: "0 0 0 2px rgba(99,91,255,0.2)",
+          },
 
           ".MuiSvgIcon-root": {
             transition: "all .2s",
           },
         },
         endIcon: {
-          marginRight: -8,
-        },
-        containedSecondary: {
-          backgroundColor: colors.secondary.main,
-          color: colors.alpha.white[100],
-          border: "1px solid " + colors.alpha.black[30],
-        },
-        outlinedSecondary: {
-          backgroundColor: colors.alpha.white[100],
-
-          "&:hover, &.MuiSelected": {
-            backgroundColor: colors.alpha.black[5],
-            color: colors.alpha.black[100],
-          },
+          marginRight: -3,
         },
         sizeSmall: {
-          padding: "6px 16px",
+          padding: "4px 12px",
           lineHeight: 1.5,
         },
         sizeMedium: {
-          padding: "8px 20px",
+          padding: "4px 8px",
         },
         sizeLarge: {
-          padding: "11px 24px",
+          padding: "6px 12px",
         },
         textSizeSmall: {
-          padding: "7px 12px",
+          padding: "2px 5px",
         },
         textSizeMedium: {
-          padding: "9px 16px",
+          padding: "3px 6px",
         },
         textSizeLarge: {
-          padding: "12px 16px",
+          padding: "7px 10px",
         },
       },
     },
@@ -644,7 +639,7 @@ export const PureLightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          borderRadius: 6,
+          borderRadius: "6px",
         },
       },
     },
@@ -1164,8 +1159,7 @@ export const PureLightTheme = createTheme({
     borderRadius: 10,
   },
   typography: {
-    fontFamily:
-      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+    // fontFamily: "'Montserrat', sans-serif",
     h1: {
       fontWeight: 700,
       fontSize: 35,

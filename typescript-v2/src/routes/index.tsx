@@ -1,35 +1,43 @@
-import { Routes } from "./router";
 import { HomePage } from "src/content";
-import { ROUTE_DEFINITION } from "src/model";
-import { adminRoutes } from "./admin";
+import { ROLE_SIDEBAR_STRUCTURE, ROUTE_DEFINITION } from "src/routes";
 import { authRoutes } from "./auth";
 import { Authenticated } from "src/guard";
+import { adminRoutes } from "./admin";
+import { AdminLayout } from "src/layouts";
+import { PageNotFound } from "src/components";
 
 export const routeDefinition: ROUTE_DEFINITION[] = [
   {
     path: "/",
     element: (
       <Authenticated>
-        <HomePage />
+        <AdminLayout>
+          <HomePage />
+        </AdminLayout>
       </Authenticated>
     ),
   },
   {
     path: "/auth",
-    children: [...authRoutes],
+    children: [...authRoutes.routeDefinition],
   },
   {
     path: "/admin",
     children: [...adminRoutes.routeDefinition],
   },
   {
-    path: "/other",
-    children: [{ path: "/other", element: <div>Other</div> }],
+    path: "*",
+    element: <PageNotFound />,
   },
+  // for other roles/categories use the below routing format
+  // {
+  //   path: "/other",
+  //   children: [{ path: "/other", element: <div>Other</div> }],
+  // },
 ];
 
-export const sidebarStructure = {
+export const sidebarStructure: ROLE_SIDEBAR_STRUCTURE = {
   admin: adminRoutes.sidebarStructure,
 };
 
-export { Routes };
+export * from "./router";

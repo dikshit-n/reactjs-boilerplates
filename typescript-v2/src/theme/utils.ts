@@ -1,3 +1,4 @@
+import { projectSetup } from "src/data";
 import * as CustomThemes from "./variants";
 
 export enum THEME_NAMES {
@@ -16,6 +17,15 @@ const customThemes = {
 };
 
 export type THEME = keyof typeof customThemes;
+
+export const getTheme = () => {
+  try {
+    return (window.localStorage.getItem("theme") ||
+      projectSetup.defaultTheme) as THEME;
+  } catch {
+    return projectSetup.defaultTheme;
+  }
+};
 
 export function themeCreator(theme: keyof typeof customThemes) {
   return customThemes[theme];
@@ -268,6 +278,7 @@ declare module "@mui/material/styles" {
       background: React.CSSProperties["color"];
       boxShadow: React.CSSProperties["color"];
       textColor: React.CSSProperties["color"];
+      height?: string;
     };
   }
 }

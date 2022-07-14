@@ -1,33 +1,17 @@
-import { RouteProps, To } from "react-router-dom";
+// All the model definitions for the app other than the models of reusables goes here
+// In other words, app-specific model definitions goes here
 
-// notistack
-import type {
-  OptionsObject as NotiStackOptionsObject,
-  SnackbarMessage as NotiStackSnackbarMessage,
-} from "notistack";
-import { ButtonProps, DialogContentProps, DialogProps } from "@mui/material";
+import { FLASH_EVENT_PROPS, MODAL_EVENT_PROPS } from "src/components";
+import { yup } from "src/utils";
+import { AnyObject, Maybe } from "yup/lib/types";
 
-// querystring
-import type { ParsedUrlQueryInput } from "querystring";
-
-// react-router
-
-export interface ROLE_ROUTE_DEFINITION {
-  routeDefinition: ROUTE_DEFINITION[];
-  sidebarStructure: SIDEBAR_STRUCTURE;
-}
-
-export interface ROUTE_DEFINITION extends Omit<RouteProps, "children"> {
-  path: string;
-  children?: ROUTE_DEFINITION[];
-}
-
-// layout
-export interface SIDEBAR_STRUCTURE {}
-
-// ------------------------------------------------------------------------- //
+// import { AuthenticationResult } from "@azure/msal-browser";
 
 // redux
+
+// #rbac-setup
+export type ROLE = "admin" | "user";
+
 export interface AUTH_DATA {
   name: string;
   email: string;
@@ -36,6 +20,7 @@ export interface AUTH_DATA {
   _id?: string;
   image?: string | null;
 }
+// export type AUTH_DATA = AuthenticationResult;
 
 export interface AUTH_STATE {
   isInitialized: boolean;
@@ -59,66 +44,9 @@ export type LOGIN_AUTH_PROPS = {
   password: string;
 };
 
-// --------------------------------------------- //
-
-// ----------------------------------------------------------------- //
-
-// context
-// JWTAuthContext
-export interface JWT_AUTH_CONTEXT extends AUTH_STATE {
-  login: (data: AUTH_DATA) => any;
-  logout: () => any;
-}
-
 // ---------------------------------------------------------------- //
 
-// custom-event-models
-
-// flash event
-export interface FLASH_EVENT_PROPS extends NotiStackOptionsObject {
-  message?: NotiStackSnackbarMessage;
-}
-
-// modal event
-interface MODAL_CONTAINER_PROPS extends Omit<DialogProps, "open"> {
-  closeOnClick?: boolean;
-  open?: boolean;
-}
-export interface MODAL_EVENT_PROPS_1 {
-  containerProps?: MODAL_CONTAINER_PROPS;
-  contentContainerProps?: DialogContentProps;
-  component?: CUSTOM_MODAL_COMPONENT;
-  type?: "custom";
-}
-export interface MODAL_EVENT_PROPS_2 extends CONFIRMATION_MODAL_PROPS {
-  containerProps?: MODAL_CONTAINER_PROPS;
-  contentContainerProps?: DialogContentProps;
-  type?: "confirmation";
-}
-
-export type MODAL_EVENT_PROPS = MODAL_EVENT_PROPS_1 | MODAL_EVENT_PROPS_2;
-
-export interface CONFIRMATION_MODAL_PROPS {
-  onConfirm?: Function;
-  onCancel?: Function;
-  title?: JSX.Element | string | null;
-  description?: JSX.Element | string | null;
-  confirmButton?:
-    | JSX.Element
-    | { label: any; props?: CUSTOM_BUTTON_PROPS }
-    | null;
-  cancelButton?:
-    | JSX.Element
-    | { label: any; props?: CUSTOM_BUTTON_PROPS }
-    | null;
-}
-
-export type CUSTOM_MODAL_COMPONENT = React.FC<{ onCancel: Function }>;
-export interface CUSTOM_MODAL_COMPONENT_PROPS {
-  [key: string]: any;
-  onCancel: Function;
-}
-
+// global declarations goes here
 declare global {
   interface Window {
     flash: (params: FLASH_EVENT_PROPS) => any;
@@ -126,21 +54,22 @@ declare global {
   }
 }
 
-// custom-button props
-export interface NavigateOptions {
-  replace?: boolean;
-  state?: any;
+// https://github.com/jquense/yup/issues/312#issuecomment-745034006 --reference
+declare module "yup" {
+  interface StringSchema<
+    TType extends Maybe<string> = string | undefined,
+    TContext extends AnyObject = AnyObject,
+    TOut extends TType = TType
+  > extends yup.BaseSchema<TType, TContext, TOut> {
+    // declare all custom methods here
+    password(message?: string): StringSchema<TType, TContext>;
+    confirmPassword(
+      reference: string,
+      message?: string
+    ): StringSchema<TType, TContext>;
+  }
 }
 
-export interface CUSTOM_BUTTON_PROPS extends Omit<ButtonProps, "href"> {
-  loading?: boolean | null;
-  href?:
-    | string
-    | {
-        to: To;
-        options?: NavigateOptions;
-      };
-  linkStyle?: boolean;
-}
+// ---------------------------------------------------------------- //
 
-// ----------------------------------------------------------------------- //
+export * from "./custom-models";

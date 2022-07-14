@@ -1,23 +1,26 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppLoader } from "src/components";
 import { rbacSetup } from "src/data";
+// import { useOAuth } from "src/hooks";
 import { useAuth } from "src/hooks";
 
 export const HomePage = () => {
-  const { data } = useAuth();
+  const { logout, data } = useAuth();
   const navigate = useNavigate();
+  const userRoles = data?.roles || [];
+  // const userRoles = data.account.idTokenClaims?.roles || [];
 
   useEffect(() => {
-    if (data) {
-      navigate(
-        `${
-          rbacSetup.homePage[data?.roles[0] as keyof typeof rbacSetup.homePage]
-        }`,
-        { replace: true }
-      );
-    }
+    navigate(
+      `${rbacSetup.homePage[userRoles[0] as keyof typeof rbacSetup.homePage]}`,
+      { replace: true }
+    );
   }, []);
 
-  return <AppLoader />;
+  return (
+    <div>
+      Homepage
+      <button onClick={() => logout()}>logout</button>
+    </div>
+  );
 };

@@ -1,8 +1,7 @@
-import { CUSTOM_BUTTON_PROPS } from "src/model";
 import { styled } from "@mui/material";
-import Button from "@mui/material/Button";
+import Button, { ButtonProps } from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate } from "react-router-dom";
+import { To, useNavigate } from "react-router-dom";
 
 const LinkStyledButton = styled(Button)(
   ({ theme }) => `
@@ -16,6 +15,23 @@ const LinkStyledButton = styled(Button)(
   }
 `
 );
+
+// custom-button props
+export interface NavigateOptions {
+  replace?: boolean;
+  state?: any;
+}
+
+export interface CUSTOM_BUTTON_PROPS extends Omit<ButtonProps, "href"> {
+  loading?: boolean | null;
+  href?:
+    | string
+    | {
+        to: To;
+        options?: NavigateOptions;
+      };
+  linkStyle?: boolean;
+}
 
 export const CustomButton: React.FC<CUSTOM_BUTTON_PROPS> = (props) => {
   const navigate = useNavigate();

@@ -6,7 +6,7 @@ import { AuthProvider } from "src/provider";
 
 // redux
 import { Provider as StoreProvider } from "react-redux";
-import { store, useSelector } from "src/redux";
+import { store } from "src/redux";
 
 // alert
 import { SnackbarProvider } from "notistack";
@@ -26,7 +26,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 // react-query setup -- https://react-query.tanstack.com/quick-start
 import { QueryClientProvider, QueryClient } from "react-query";
-import { CustomModal, FlashMessage } from "./components";
+import { CustomModal, ErrorBoundary, FlashMessage } from "src/components";
+
+import "./assets/scss/global.scss";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -34,32 +36,34 @@ const clientSideEmotionCache = createEmotionCache();
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
-  useEffect(createEventEmitters, []);
+  useEffect(() => createEventEmitters(), []);
   return (
-    <CacheProvider value={clientSideEmotionCache}>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <QueryClientProvider client={queryClient}>
-          <StoreProvider store={store}>
-            <ThemeProvider>
-              <SnackbarProvider
-                maxSnack={6}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-              >
-                <CssBaseline />
-                <FlashMessage />
-                <CustomModal />
-                <AuthProvider>
-                  <Routes />
-                </AuthProvider>
-              </SnackbarProvider>
-            </ThemeProvider>
-          </StoreProvider>
-        </QueryClientProvider>
-      </LocalizationProvider>
-    </CacheProvider>
+    <ErrorBoundary>
+      <CacheProvider value={clientSideEmotionCache}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <QueryClientProvider client={queryClient}>
+            <StoreProvider store={store}>
+              <ThemeProvider>
+                <SnackbarProvider
+                  maxSnack={6}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                >
+                  <CssBaseline />
+                  <FlashMessage />
+                  <CustomModal />
+                  <AuthProvider>
+                    <Routes />
+                  </AuthProvider>
+                </SnackbarProvider>
+              </ThemeProvider>
+            </StoreProvider>
+          </QueryClientProvider>
+        </LocalizationProvider>
+      </CacheProvider>
+    </ErrorBoundary>
   );
 };
 
