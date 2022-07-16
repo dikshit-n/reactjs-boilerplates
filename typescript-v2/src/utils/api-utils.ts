@@ -24,10 +24,12 @@ export const getError = (
       } else {
         error = {
           ...errorObject.response,
-          message:
-            `${errorObject.response?.data}` ||
+          message: `${
+            errorObject.message ||
+            errorObject.response?.data ||
             // errorObject.response?.data?.message ||
-            "Failed to process your request",
+            "Failed to process your request"
+          }`,
         };
       }
     }
@@ -109,14 +111,6 @@ export async function handleError(error, customFunction?: Function) {
   }
 }
 
-export async function handleSuccess(message, customFunction?: Function) {
-  if (message) {
-    if (customFunction) customFunction(message);
-    else window.flash({ message });
-  }
-}
-
-// when you use microsoft authentication
 export function convertMsalError(error) {
   if (error && error instanceof BrowserAuthError) {
     const newError = new Error(
