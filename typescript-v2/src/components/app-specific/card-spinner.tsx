@@ -27,11 +27,15 @@ export const CardSpinner: React.FC<CARD_SPINNER_PROPS> = (props) => {
 
   return (
     <Container>
-      {new Array(count).map((_, index) => (
+      {[Array(count)].map((_, index) => (
         <div
           key={uniqueKeys[index]}
-          className="d-flex flex-column"
-          style={{ padding: 10 }}
+          style={{
+            padding: 10,
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
         >
           <div
             style={{ width: "50%", minWidth: 50, height: 20, borderRadius: 20 }}
