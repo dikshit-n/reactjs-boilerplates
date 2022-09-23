@@ -32,6 +32,7 @@
         "no-mixed-spaces-and-tabs": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-types": "off",
         "react/no-unescaped-entities": "off",
         "react/prop-types": "off",
         "react/jsx-uses-react": "off",
